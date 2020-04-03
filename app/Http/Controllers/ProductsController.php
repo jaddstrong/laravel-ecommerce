@@ -144,25 +144,30 @@ class ProductsController extends Controller
 
     public function addToCart(Request $request)
     {
+        request()->validate([
+            'quantity' => 'required|min:1'
+        ]);
+        $product = Product::find($request->id);
+        $total = $product->price * $request->quantity;
         if ($request->session()->exists('cart')) {
             $data = $request->session()->get('cart');
-            $i = 0;
             $check = false;
             foreach($data as $key)
             {
-                if($key[0] == $request->id)
+                if($key[0][0] == $request->id)
                 {
-                    // $request->session()->forget('cart.'.$i);
-                    $put = $request->session()->put('cart.'.$i, [$request->id, $request->quantity]);
+                    
+                    $total_quantity = $request->quantity + $key[0][3];
+                    $request->session()->forget('cart.'.$request->id);
+                    $put = $request->session()->push('cart.'.$request->id, [$request->id, $product->name, $product->price, $total_quantity, $total]);
                     $check = true;
                 }
-                $i++;
             }
             if($check == false){
-                $request->session()->push('cart', [$request->id, $request->quantity]);
+                $request->session()->push('cart.'.$request->id, [$request->id, $product->name, $product->price, $request->quantity, $total]);
             }
         }else{
-            $request->session()->push('cart', [$request->id, $request->quantity]);
+            $request->session()->push('cart.'.$request->id, [$request->id, $product->name, $product->price, $request->quantity, $total]);
         }
     }
 
@@ -170,17 +175,15 @@ class ProductsController extends Controller
     {
         if ($request->session()->exists('cart')) {
             $data = $request->session()->get('cart');
-            $items = array();
-            $quantity = array();
+            $arr = array();
+            // dd($data);
             foreach($data as $key)
             {
-                array_push($items, $key[0]);
-                array_push($quantity, $key[1]);
+                array_push($arr, $key[0][0]);
             }
-
-            $items = Product::whereIn('id', $items)->get();
-
-            return view('products.cart')->with('items', $items);
+            // dd($arr);
+            $product = Product::whereIn('id', $arr)->get();
+            return view('products.cart')->with('items', $product);
         }
 
         return view('products.cart');
@@ -192,12 +195,13 @@ class ProductsController extends Controller
             $data = $request->session()->get('cart');
             $items = array();
             $quantity = array();
+            
             foreach($data as $key)
             {
-                array_push($items, $key[0]);
-                array_push($quantity, $key[1]);
+                
+                array_push($items, $key[0][0]);
+                array_push($quantity, $key[0][3]);
             }
-
             $products = Product::whereIn('id', $items)->get();
             $i = 0;
             foreach($products as $item){
@@ -208,19 +212,54 @@ class ProductsController extends Controller
                 $logs->product_price = $item->price;
                 $logs->product_quantity = $quantity[$i];
                 $logs->product_total = $quantity[$i] * $item->price;
+                $logs->send = false;
                 $logs->save();
+
+                $update = Product::find($item->id);
+                $stock = $update->stack - $quantity[$i];
+                $update->stack = $stock;
+                $update->save();
                 $i++;
             }
-            
-            Mail::to("jaddstrong@gmail.com")->send(new SendMail());
+
+            $purchase = Log::where('user_id', Auth::user()->id)->where('send', false)->get();
+            Mail::to(Auth::user()->email)->send(new SendMail($purchase));
+            foreach($purchase as $item)
+            {
+                $send = Log::find($item->id);
+                $send->send = true;
+                $send->save();
+            }
+            $request->session()->forget('cart');
         }
         return null;
+    }
+
+    public function remove(Request $request)
+    {
+        $data = $request->session()->get('cart');
+        foreach($data as $key)
+        {
+            // dd($key[0][0]);
+            if($key[0][0] == $request->id)
+            {
+                $request->session()->forget('cart.'.$request->id);
+            }
+        }
+    }
+
+    public function purchaseList()
+    {
+        $user = Auth::user()->id;
+        $logs = Log::where('user_id', '=',$user)->get();
+        
+        return response()->json($logs);
     }
 
     public function logs()
     {
         $user = Auth::user()->id;
-        $logs = Log::where('user_id', '=',$user);
+        $logs = Log::where('user_id', $user)->get();
         
         return view('mails.index')->with($logs);
     }

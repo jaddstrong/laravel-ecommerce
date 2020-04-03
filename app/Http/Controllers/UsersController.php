@@ -21,7 +21,7 @@ class UsersController extends Controller
         // $request->session()->push('cart.user1', ['item','pcs']);
         // $request->session()->push('cart.user1', ['item','pcs']);
         // $request->session()->put('cart');
-        $data = $request->session()->get('cart');
+        $data = $request->session()->all();
         dd($data);
         return view("users");
     }

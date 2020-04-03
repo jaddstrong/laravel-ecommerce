@@ -21,6 +21,7 @@ class CreateLogsTable extends Migration
             $table->double('product_price');
             $table->integer('product_quantity');
             $table->double('product_total');
+            $table->boolean('send');
             $table->timestamps();
         });
     }

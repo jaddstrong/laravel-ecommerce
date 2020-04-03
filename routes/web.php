@@ -45,6 +45,8 @@ Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function(){
     Route::post('/addToCart', 'ProductsController@addToCart');
     Route::get('/purchase', 'ProductsController@purchase');
     Route::get('/logs', 'ProductsController@logs');
+    Route::get('/remove', 'ProductsController@remove');
+    Route::get('/purchase/list', 'ProductsController@purchaseList');
     //BOTH
     Route::get('/product/show', 'ProductsController@show');
 });

@@ -6,19 +6,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Auth;
 
 class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $purchase;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($purchase)
     {
-        //
+        $this->purchase = $purchase;
     }
 
     /**

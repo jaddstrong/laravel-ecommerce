@@ -45,19 +45,19 @@
             <form enctype="multipart/form-data" method="POST" id="upload_image_form1" action="javascript:void(0)">
                 <div class="form-group">
                     <label for="name">Product name:</label>
-                    <input type="text" id="name1" name="name1" class="form-control">
+                    <input type="text" id="name1" name="name1" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Product description:</label>
-                    <input type="text" id="description1" name="description1" class="form-control">
+                    <input type="text" id="description1" name="description1" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="price">Product price:</label>
-                    <input type="text" id="price1" name="price1" class="form-control">
+                    <input type="text" id="price1" name="price1" min="1" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="stack">Product stack:</label>
-                    <input type="number" id="stack1" name="stack1" class="form-control">
+                    <input type="number" id="stack1" name="stack1" min="1" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="image">Product image:</label><br>
@@ -96,19 +96,19 @@
             <form enctype="multipart/form-data" method="POST" id="upload_image_form" action="javascript:void(0)">
                 <div class="form-group">
                     <label for="name">Product name:</label>
-                    <input type="text" id="name" name="name" class="form-control">
+                    <input type="text" id="name" name="name" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Product description:</label>
-                    <input type="text" id="description" name="description" class="form-control">
+                    <input type="text" id="description" name="description" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="price">Product price:</label>
-                    <input type="number" id="price" name="price" class="form-control">
+                    <input type="number" id="price" name="price" min="1" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="stack">Product stack:</label>
-                    <input type="number" id="stack" name="stack" class="form-control">
+                    <input type="number" id="stack" name="stack" min="1" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="image">Product image:</label><br>
@@ -145,7 +145,7 @@
 
       <!--Footer-->
       <div class="modal-footer">
-        <a href="" class="btn btn-outline-danger" id="yes">Yes</a>
+        <a href="" class="btn btn-outline-danger" id="yes" data-dismiss="modal">Yes</a>
         <a type="button" class="btn  btn-danger" data-dismiss="modal">No</a>
       </div>
     </div>
@@ -203,7 +203,6 @@
     $('#upload_image_form').submit(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
-
         $.ajax({
             type:'POST',
             url: "/product",
