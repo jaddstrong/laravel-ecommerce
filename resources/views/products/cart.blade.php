@@ -46,7 +46,7 @@ h5{
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    
+                    <a href="/user" class="btn btn-md btn-primary float-right" role="button">View Products</a>
                     <h4>Cart</h4>
                 </div>
 
@@ -54,6 +54,12 @@ h5{
 
                     <div class="row">
                         @if(Session::exists('cart'))
+                            @if(Session::get('cart') == null)
+                                {{Session::forget('cart')}}
+                                <div class="mx-auto">
+                                    <h5>Order products first..</h5>
+                                </div>
+                            @else
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -90,6 +96,7 @@ h5{
                                     </tr>
                                 </tbody>
                             </table>
+                            @endif
                         @else
                             <div class="mx-auto">
                             <h5>Order products first..</h5>
@@ -169,6 +176,10 @@ h5{
 
 <script>
     $('#purchase').click(function(){
+        $('#loader').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
         $('#loader').modal("show");
         $.ajax({
             url:'/purchase',

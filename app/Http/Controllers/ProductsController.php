@@ -137,7 +137,7 @@ class ProductsController extends Controller
 
     public function display()
     {
-        $products = Product::where('drop', false)->latest('created_at')->get();
+        $products = Product::where('drop', false)->where('stack', '!=', 0)->latest('created_at')->get();
 
         return view('products.display')->with('products', $products);
     }
