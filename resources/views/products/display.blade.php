@@ -207,7 +207,7 @@ $(document).ready(function() {
         var id = $('#product_id').val();
         var quantity = $('#quantity').val();
         var limit = $('#quantity').attr('max');
-        if(quantity <= limit){
+        if(quantity <= limit && quantity > 1){
             $.ajax({
                 url:'/addToCart',
                 type:'POST',
