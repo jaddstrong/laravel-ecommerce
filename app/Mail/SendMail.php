@@ -12,14 +12,16 @@ class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $purchase;
+    public $auth;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($purchase)
+    public function __construct($purchase, $auth)
     {
         $this->purchase = $purchase;
+        $this->auth = $auth;
     }
 
     /**

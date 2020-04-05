@@ -41,12 +41,12 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function(){
     //USER ROUTES
     Route::get('/user', 'ProductsController@display');
-    Route::get('/cart', 'ProductsController@cart');
-    Route::post('/addToCart', 'ProductsController@addToCart');
-    Route::get('/purchase', 'ProductsController@purchase');
-    Route::get('/logs', 'ProductsController@logs');
-    Route::get('/remove', 'ProductsController@remove');
-    Route::get('/purchase/list', 'ProductsController@purchaseList');
+    Route::get('/logs', 'LogsController@logs');
+    Route::post('/addToCart', 'CartController@addToCart');
+    Route::get('/cart', 'CartController@cart');
+    Route::get('/purchase', 'CartController@purchase');
+    Route::get('/remove', 'CartController@remove');
+    Route::get('/purchase/list', 'LogsController@purchaseList');
     //BOTH
     Route::get('/product/show', 'ProductsController@show');
 });

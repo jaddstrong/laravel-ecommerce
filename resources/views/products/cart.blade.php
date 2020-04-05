@@ -29,6 +29,16 @@ h5{
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
 
 /* Safari */
 @-webkit-keyframes spin {
@@ -113,9 +123,9 @@ h5{
 <!--Modal: modalLoader-->
 <div class="modal fade" id="loader" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+  <div class="modal-dialog modal-sm modal-notify modal-danger vertical-alignment-helper" role="document">
     <!--Content-->
-    <div class="modal-content text-center" style="background-color:transparent;border:none;">
+    <div class="modal-content text-center vertical-align-center" style="background-color:transparent;border:none;">
       <!--Body-->
       <div class="modal-body">
             <center><div class="loader"></div></center>
@@ -155,18 +165,18 @@ h5{
 <!--Modal: modalConfirmDelete-->
 <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+  <div class="modal-dialog modal-md modal-notify modal-danger" role="document">
     <!--Content-->
     <div class="modal-content text-center">
       <!--Header-->
       <div class="modal-header d-flex justify-content-center">
-        <p class="heading"><strong>Are you sure?</strong></p>
+        <p class="heading"><strong>Are you sure to delete this item?</strong></p>
       </div>
 
       <!--Footer-->
       <div class="modal-footer">
+        <a type="button" href="#" class="btn  btn-danger" data-dismiss="modal">No</a>
         <a href="" class="btn btn-outline-danger" id="yes" data-dismiss="modal">Yes</a>
-        <a type="button" class="btn  btn-danger" data-dismiss="modal">No</a>
       </div>
     </div>
     <!--/.Content-->
