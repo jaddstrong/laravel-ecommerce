@@ -18,35 +18,45 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/mail', function () {
-    return new Sendmail();
-});
-
-Route::get('/asd', 'ProductsController@logs');
-
-Route::get('/test', 'UsersController@index');
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function(){
-    //ADMIN ROUTES
+
+    //PRODUCT ROUTES
     Route::get('/products', ['uses'=>'ProductsController@index', 'as'=>'products.index']);
-    Route::post('product', 'ProductsController@store');
-    Route::post('/product/update', 'ProductsController@update');
-    Route::post('/product/drop', 'ProductsController@drop');
+    Route::post('product', 'ProductsController@store')->middleware('permission:create-products');
+    Route::post('/product/update', 'ProductsController@update')->middleware('permission:edit-products');
+    Route::post('/product/drop', 'ProductsController@drop')->middleware('permission:delete-products');
+
+    //USER ROUTES
+    Route::get('/user', 'UsersController@index');
+    Route::get('/user/role', 'UsersController@role');
+    Route::post('/user/store', 'UsersController@store');
+    Route::get('/user/show', 'UsersController@show');
+    Route::post('/user/update', 'UsersController@update');
+    Route::post('/user/delete','UsersController@delete');
+
+    //ROLE ROUTES
+    Route::get('/roles', 'RolesController@index');
+    Route::post('/roles/store', 'RolesController@store');
+    Route::get('/roles/permission', 'RolesController@permission');
+    Route::get('/roles/show', 'RolesController@show');
+    Route::post('/roles/update', 'RolesController@update');
+    Route::post('roles/delete', 'RolesController@delete');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function(){
-    //USER ROUTES
-    Route::get('/user', 'ProductsController@display');
+
+    //CLIENT ROUTES
+    Route::get('/display', 'ProductsController@display');
     Route::get('/logs', 'LogsController@logs');
     Route::post('/addToCart', 'CartController@addToCart');
     Route::get('/cart', 'CartController@cart');
     Route::get('/purchase', 'CartController@purchase');
     Route::get('/remove', 'CartController@remove');
     Route::get('/purchase/list', 'LogsController@purchaseList');
+
     //BOTH
     Route::get('/product/show', 'ProductsController@show');
 });

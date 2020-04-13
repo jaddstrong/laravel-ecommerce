@@ -24,10 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->email == 'admin@admin.com'){
-            return redirect('/products');
-        }else{
-            return redirect('/user');
-        }
+        return view('/home');
     }
 }

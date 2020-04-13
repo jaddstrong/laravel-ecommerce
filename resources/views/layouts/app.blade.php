@@ -46,7 +46,20 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @guest
+                        @else
+                            @if(!empty(Auth::user()->roles[0]))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/products">Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/user">Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/roles">Roles</a>
+                                </li>
+                            @endif
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->

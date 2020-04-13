@@ -8,6 +8,7 @@ use App\Product;
 use Auth;
 class ProductsController extends Controller
 {
+
     //ADMIN DISPLAY PRODUCTS IN DATA TABLES
     public function index(Request $request)
     {
@@ -105,32 +106,24 @@ class ProductsController extends Controller
             $update = Product::find($request->id);
             unlink(public_path('images/'.$update->img));
 
-            //UPDATE A PRODUCT TO DATABASE;
-            $update->name = $request->name1;
-            $update->description = $request->description1;
-            $update->price = $request->price1;
-            $update->stack = $request->stack1;
+            //UPDATE A PRODUCT IMAGE TO DATABASE;
             $update->img = $fileToStore;
             $update->save();
-             
-            return "success";
-        }else{
-
-            //UPDATE A PRODUCT TO DATABASE;
-            $update = Product::find($request->id);
-            $update->name = $request->name1;
-            $update->description = $request->description1;
-            $update->price = $request->price1;
-            $update->stack = $request->stack1;
-            $update->save();
         }
-        return "fail";
+
+        //UPDATE A PRODUCT TO DATABASE;
+        $update = Product::find($request->id);
+        $update->name = $request->name1;
+        $update->description = $request->description1;
+        $update->price = $request->price1;
+        $update->stack = $request->stack1;
+        $update->save();
 
     }
 
     public function display()
     {
-        $products = Product::where('drop', false)->where('stack', '!=', 0)->latest('created_at')->get();
+        $products = Product::where('drop', false)->where('stack', '!=', 0)->latest('created_at')->paginate(12);
 
         return view('products.display')->with('products', $products);
     }

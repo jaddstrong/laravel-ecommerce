@@ -63,10 +63,8 @@ class CartController extends Controller
             $data = $request->session()->get('cart');
             $items = array();
             $quantity = array();
-            
             foreach($data as $key)
-            {
-                
+            {   
                 array_push($items, $key[0][0]);
                 array_push($quantity, $key[0][3]);
             }

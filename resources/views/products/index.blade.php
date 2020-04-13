@@ -7,7 +7,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-primary create" data-toggle="modal" data-target="#myModal" id="create">Create Product</button>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-primary create" data-toggle="modal" data-target="#myModal" id="create">Create Product</button>
+                    </div>
+                    <h5>Product Management</h5>
                 </div>
 
                 <div class="card-body">
@@ -112,7 +115,7 @@
                 </div>
                 <div class="form-group">
                     <label for="image">Product image:</label><br>
-                    <input type="file" id="image" name="image" required>
+                    <input type="file" id="image" name="image" >
                 </div>
                 <div class="form-group">
                     <center>
@@ -217,7 +220,8 @@
                 $('#myModal').modal('toggle');
             },
             error: function(data){
-                alert("fail");
+                var msg = $.parseJSON(data['responseText']);
+                alert(data['status']+" | "+data['statusText']+": "+ msg['message']);
                 $('#myModal').modal('toggle');
             }
         });
@@ -239,10 +243,11 @@
                 this.reset();
                 table.ajax.reload();
                 $('#myModal1').modal('toggle');
+                alert("success");
             },
             error: function(data){
-                alert("fail");
                 $('#myModal1').modal('toggle');
+                alert("fail");
             }
         });
     });
@@ -279,6 +284,10 @@
                 data:{id:id},
                 success:function(response){
                     table.ajax.reload();
+                },
+                error:function(response){
+                    var msg = $.parseJSON(response['responseText']);
+                    alert(response['status']+" | "+response['statusText']+": "+ msg['message']);
                 }
             });
         });

@@ -56,7 +56,7 @@ h5{
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="/user" class="btn btn-md btn-primary float-right" role="button">View Products</a>
+                    <a href="/display" class="btn btn-md btn-primary float-right" role="button">View Products</a>
                     <h4>Cart</h4>
                 </div>
 
@@ -154,7 +154,7 @@ h5{
       </div>
       <!--Footer-->
       <div class="modal-footer">
-        <a type="button" class="btn  btn-primary" href="/user">Continue Shopping</a>
+        <a type="button" class="btn  btn-primary" href="/display">Continue Shopping</a>
       </div>
     </div>
     <!--/.Content-->

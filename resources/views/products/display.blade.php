@@ -62,6 +62,15 @@ h5{
                         @endforeach
                     </div>
                 </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                        <div class="justify-content-center">
+                            {{$products->links()}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -119,6 +128,7 @@ h5{
             <table class="table table-dark table-striped">
                 <thead>
                     <tr>
+                        <th>Date</th>
                         <th>Product name</th>
                         <th>Product price</th>
                         <th>Product quantity</th>
@@ -205,8 +215,8 @@ $(document).ready(function() {
 
     $('#addToCart').click(function(){
         var id = $('#product_id').val();
-        var quantity = $('#quantity').val();
-        var limit = $('#quantity').attr('max');
+        var quantity = parseInt($('#quantity').val());
+        var limit = parseInt($('#quantity').attr('max'));
         if(quantity <= limit && quantity >= 1){
             $.ajax({
                 url:'/addToCart',
@@ -236,10 +246,11 @@ $(document).ready(function() {
                 var total = 0;
                 for(i = 0; i < response.length; i++)
                 {
+                    var date = new Date(response[i].created_at).toUTCString();
                     total += response[i].product_total;
-                    $('#purchase-table').append("<tr><td>"+response[i].product_name+"</td><td>&#8369; "+response[i].product_price+"</td><td>"+response[i].product_quantity+"</td><td>&#8369; "+response[i].product_total+"</td></tr>");
+                    $('#purchase-table').append("<tr><td>"+date+"</td><td>"+response[i].product_name+"</td><td>&#8369; "+response[i].product_price+"</td><td>"+response[i].product_quantity+"</td><td>&#8369; "+response[i].product_total+"</td></tr>");
                 }
-                $('#purchase-table').append("<tr><td></td><td></td><td align='right'>Total: </td><td>"+total+"</td></tr>");
+                $('#purchase-table').append("<tr><td></td><td></td><td></td><td align='right'>Total: </td><td>"+total+"</td></tr>");
                 $('#myModalPurchase').modal("show");
             }
         });

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use Spatie\Permission\Models\Role;
 
 class AdminMiddleware
 {
@@ -17,7 +18,8 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
-            if(Auth::user()->email == 'admin@admin.com'){
+            $role = Role::all();
+            if(Auth::user()->hasAnyRole($role)){
                 return $next($request);
             }
         }
