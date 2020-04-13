@@ -73,31 +73,33 @@
             </div>
             <div class="modal-body">
                 <div class="col-lg-12">
-                    <div class="form-group">
-                        <strong for="name">User name:</strong><span id ="error_name"></span>
-                        <input class="form-control" type="text" name="name" id="name" required>
-                    </div>
-                    <div class="form-group">
-                        <strong for="name">User email:</strong><span id ="error_email"></span>
-                        <input class="form-control" type="email" name="email" id="email" required>
-                    </div>
-                    <div class="form-group" id="note">
-                        <p><strong>Note:</strong><small> The password fields are for changing password. Leave blank if not.</small></p>
-                    </div>
-                    <div class="form-group" id="pass">
-                        <strong for="name">User password:</strong><span id ="error_password"></span>
-                        <input class="form-control" type="password" name="password" id="password" required>
-                    </div>
-                    <div class="form-group" id="conpass">
-                        <strong for="name">User confirm password:</strong>
-                        <input class="form-control" type="password" name="confirm-password" id="confirm-password" required>
-                    </div>
-                    <div class="form-group">
-                        <strong for="name">User Role:</strong><span id ="error_role"></span>
-                        <select class="form-control" id="role" name="role">
-                            <option></option>
-                        </select>
-                    </div>
+                    <form id="form-table">
+                        <div class="form-group">
+                            <strong for="name">User name:</strong><span id ="error_name"></span>
+                            <input class="form-control" type="text" name="name" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <strong for="name">User email:</strong><span id ="error_email"></span>
+                            <input class="form-control" type="email" name="email" id="email" required>
+                        </div>
+                        <div class="form-group" id="note">
+                            <p><strong>Note:</strong><small> The password fields are for changing password. Leave blank if not.</small></p>
+                        </div>
+                        <div class="form-group" id="pass">
+                            <strong for="name">User password:</strong><span id ="error_password"></span>
+                            <input class="form-control" type="password" name="password" id="password" required>
+                        </div>
+                        <div class="form-group" id="conpass">
+                            <strong for="name">User confirm password:</strong>
+                            <input class="form-control" type="password" name="confirm-password" id="confirm-password" required>
+                        </div>
+                        <div class="form-group">
+                            <strong for="name">User Role:</strong><span id ="error_role"></span>
+                            <select class="form-control" id="role" name="role">
+                                <option></option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">
@@ -148,14 +150,7 @@ $( document ).ready(function(){
     });
 
     $('#create').click(function(){
-        $('#title').text("Create User");
-        $('#name').val("");
-        $('#email').val("");
-        $('#password').val("");
-        $('#confirm-password').val("");
-        $('#note').hide();
-        $('#submit').show();
-        $('#update').hide();
+        $('#form-table')[0].reset();
     });
 
     $('#submit').click(function(e){

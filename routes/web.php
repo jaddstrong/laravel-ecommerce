@@ -57,6 +57,7 @@ Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function(){
     Route::get('/remove', 'CartController@remove');
     Route::get('/purchase/list', 'LogsController@purchaseList');
 
-    //BOTH
-    Route::get('/product/show', 'ProductsController@show');
 });
+
+//BOTH
+Route::get('/product/show', 'ProductsController@show')->middleware('auth');

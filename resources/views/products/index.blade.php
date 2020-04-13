@@ -240,14 +240,13 @@
             contentType: false,
             processData: false,
             success: (data) => {
-                this.reset();
                 table.ajax.reload();
                 $('#myModal1').modal('toggle');
-                alert("success");
             },
             error: function(data){
-                $('#myModal1').modal('toggle');
-                alert("fail");
+                var msg = $.parseJSON(data['responseText']);
+                alert(data['status']+" | "+data['statusText']+": "+ msg['message']);
+                $('#myModal1').modal('hide');
             }
         });
     });

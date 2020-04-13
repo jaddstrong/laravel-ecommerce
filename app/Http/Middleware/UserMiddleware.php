@@ -17,8 +17,10 @@ class UserMiddleware
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
-            return $next($request);
+            if(empty(Auth::user()->roles[0])){
+                return $next($request);
+            }
         }
-        return redirect('/login');
+        abort(403);
     }
 }

@@ -85,15 +85,17 @@
             </div>
             <div class="modal-body">
                 <div class="col-lg-12">
-                    <div class="form-group">
-                        <strong for="name">Role name:</strong><span id="error_role" style="color:red;"></span>
-                        <input class="form-control" type="text" name="name" id="name">
-                        <input type="hidden" id="id">
-                    </div>
-                    <div class="form-group">
-                        <strong for="checkbox">Select permissions:</strong><span id="error_permission" style="color:red;"></span>
-                        <div id="permission">
-                    </div>
+                    <form id="form-table">
+                        <div class="form-group">
+                            <strong for="name">Role name:</strong><span id="error_role" style="color:red;"></span>
+                            <input class="form-control" type="text" name="name" id="name">
+                            <input type="hidden" id="id">
+                        </div>
+                        <div class="form-group">
+                            <strong for="checkbox">Select permissions:</strong><span id="error_permission" style="color:red;"></span>
+                            <div id="permission">
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">
@@ -122,12 +124,7 @@ $( document ).ready(function(){
     });
 
     $('#create').click(function(){
-        $('#submit').show();
-        $('#update').hide();
-        $('.modal-title').text('Create Role');
-        $('#name').val("");
-        $('.checkbox').prop('checked', false);
-        $('#name').attr('disabled', false);
+        $('#form-table')[0].reset();
         $('#error_role').text("");
         $('#error_permission').text("");
     });
